@@ -27,34 +27,35 @@ def detect_resistors(img):
     and there are many resistors.
     """
     # Define bounds for Red, Green, and Blue to include in binary image
-    rl = 120
-    rh = 190
-    gl = 50
-    gh = 90
-    bl = 25
-    bh = 290
+    rl = 0
+    rh = 50
+    gl = 0
+    gh = 120
+    bl = 0
+    bh = 120
     # Generate binary image
     binary_image = cv2.inRange(img, (rl, gl, bl), (rh, gh, bh))
     # Uncomment to display binary image
-    # cv2.namedWindow("Binary image")
-    # cv2.imshow("Binary image", binary_image)
+    cv2.namedWindow("Binary image")
+    cv2.imshow("Binary image", binary_image)
 
     # Generate contours
     contours = create_binary_contours(binary_image)
     # Filter contours by area
     roost_contour = []
     for i in contours:
-        if 750 > i[0] > 550:
-            roost_contour.append(i[1])
-    return roost_contour
+        # if 15000 > i[0] > 300:
+        roost_contour.append(i[1])
+        print(roost_contour[0])
+    return roost_contour[0]
 
 
 if __name__ == "__main__":
-    path = "Resistor_Pick_and_Place/Media/single_resistor.JPG"
+    path = "Media/single_resistor.JPG"
     active = True
     test_image = cv2.imread(path)
+    roost_contour = detect_resistors(test_image)
     while active:
-        roost_contour = detect_resistors(test_image)
         cv2.namedWindow("Original image")
         cv2.imshow("Original image", test_image)
         for i in enumerate(roost_contour):
