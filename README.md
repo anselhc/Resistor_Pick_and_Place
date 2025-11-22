@@ -1,33 +1,16 @@
-# Python Project Template Repository
+# Resister Pick and Place
 
-This is a template repository for a Python project. Feel free to use and edit
-this repository (including this file) for your needs. Below, find some
-instructions and tips for using this template repository.
+Robotics project in progress with a simple goal: To utilize a robotic are equipped with an electromagnet and a camera to extract a single resistor from a pile of resistors.
 
-## How to Use
+## Milestone I: Completed
 
-Click on the "Use this template" button in the top right corner to create a new
-repository based on this template. If this is for a class project, we ask that
-you keep it in the `olincollege` GitHub organization, and that you refrain from
-keeping the repository private. This will ensure that relevant people can access
-your repository for assessment, etc.
+The first milestone of this project consisted of two fundimental goals. First, we wanted to verify the feasibilty of connecting to the WidowX robotic arm we have on hand for experimentation purposes as we develop this projcet. Through collaboration with an other project team, we were indeed able to verify that this would be reasonably attainable. 
 
-## Requirements
+Our second goal was to develop a simple algorithm for determining whether a given image contains zero, one, or many resistors. The most challenging part here was dealing with lighting, considering the wide variety of resistor colors and their reflective leads. We were eventually able to attain this goal provided we are able to make some key assumptions about the image. Our most successful technique thus far involves cropping the image down to include only a small square in the center, doing a contour search, and determining whether the area of the largest contour is in the expected range for a single resistor. Importantly, we assume here that the resistor is in the center of the image and the camera is a certain distance away (within a small range of error), factors that we hope to control to some extent when we incorperate the robotic arm. Notably, without these assumptions, we would not be able to crop the image without initial detection, nor filter based on how much of the image is occupied by the resistor. 
 
-The `requirements.txt` file is blank and should be filled out with any project
-dependencies. There is a Python package called `pipreqs` that autogenerates the
-contents of the `requirements.txt` file based on the `import` statements in your
-`.py` files. To get this, run
+Considering how delicately the algorithm's success rests on those key assumptions, we plan to use multiple images from different persepctives as well as layering multiple filtering techniques.
 
-```
-pip install pipreqs
-```
+## Milestone II: In progress
 
-Then, in the root of your project repository, run:
 
-```
-pipreqs --mode compat
-```
-
-If you already have a `requirements.txt`, the above command will ask you to
-rerun the command with the `--force` flag to overwrite it.
+## MVP and Stretch Goals
