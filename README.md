@@ -1,33 +1,27 @@
-# Python Project Template Repository
+# Resister Pick and Place
 
-This is a template repository for a Python project. Feel free to use and edit
-this repository (including this file) for your needs. Below, find some
-instructions and tips for using this template repository.
+Robotics project in progress with a simple goal: To utilize a robotic arm equipped with an electromagnet and a camera to extract a single resistor from a pile of resistors.
 
-## How to Use
+## Milestone I: Completed
+### WidowX
+The first milestone of this project consisted of two fundamental goals. First, we wanted to verify the feasibility of connecting to the WidowX robotic arm we have on hand for experimentation purposes as we develop this project. Through collaboration with another project team, we were indeed able to verify that this would be reasonably attainable.
+### Contour detection
+Our second goal was to develop a simple algorithm for determining whether a given image contains zero, one, or many resistors. The most challenging part here was dealing with lighting, considering the wide variety of resistor colors and their reflective leads. We were eventually able to attain this goal provided we are able to make some key assumptions about the image. Our most successful technique thus far involves cropping the image down to include only a small square in the center, doing a contour search, and determining whether the area of the largest contour is in the expected range for a single resistor. Importantly, we assume here that the resistor is in the center of the image and the camera is a certain distance away (within a small range of error), factors that we hope to control to some extent when we incorporate the robotic arm. Notably, without these assumptions, we would not be able to crop the image without initial detection, nor filter based on how much of the image is occupied by the resistor.
 
-Click on the "Use this template" button in the top right corner to create a new
-repository based on this template. If this is for a class project, we ask that
-you keep it in the `olincollege` GitHub organization, and that you refrain from
-keeping the repository private. This will ensure that relevant people can access
-your repository for assessment, etc.
+Considering how delicately the algorithm's success rests on those key assumptions, we plan to use multiple images from different perspectives as well as layering multiple filtering techniques. Some of the other filtering techniques we’ve experimented with include k-means clustering and the watershed algorithm.
 
-## Requirements
+### k-means clustering
+K-means clustering works by plotting the color value of each pixel and extracting from the resulting graph the colors around which the k largest groups are centered. Using k-means clustering, we would collapse the image into a specified number of colors—in this case, two of them. This would allow us to separate the resistor from the background without manually specifying a color range for which to apply a binary mask, as the algorithm will automatically detect the dominant colors. This method would theoretically work for a more diverse set of images because it can adapt to varying lighting and resistor types. However, we did not end up using k-means clustering. While it was able to distinguish the center of the resistor from its background, the presence of any shadows was enough to cause noise in the image.
 
-The `requirements.txt` file is blank and should be filled out with any project
-dependencies. There is a Python package called `pipreqs` that autogenerates the
-contents of the `requirements.txt` file based on the `import` statements in your
-`.py` files. To get this, run
+### Watershed algorithm
+The watershed algorithm works by converting each pixel to a brightness value, which it combines with the corresponding coordinates to treat the image like a topographical map which contains “basins” representing the outlines of shapes within the image. Depending on how sensitive the algorithm is, it may filter out basins that are too “shallow”, thus leaving just the largest basins in the image. In this manner, it is possible to detect two touching or partially overlapping shapes as distinct—for example, two resistors sitting right next to each other. Using the watershed algorithm, we would detect whether there is just one resistor or more than one resistor by counting the number of basins in the ‘sure foreground’. If there is more than one basin, we know there is more than one resistor.
 
-```
-pip install pipreqs
-```
+## Milestone II: In progress
 
-Then, in the root of your project repository, run:
+For milestone II, we aim to make our resistor detection more adaptable to different lighting conditions. We will either implement a system to take resistor photos from a consistent location, or update the code to eliminate the need for manually cropping the image. We will begin working with the physical Widow X arm or implement a simulation of the arm, with the goal of being able to pick up and move a resistor to a specified location. We will use probability distributions to randomize the location from which the arm picks up a resistor, and if we continue with the physical arm, we will use a permanent magnet to attach the resistor to the arm. 
 
-```
-pipreqs --mode compat
-```
+## MVP and Stretch Goals
 
-If you already have a `requirements.txt`, the above command will ask you to
-rerun the command with the `--force` flag to overwrite it.
+Our MVP for this project consists of three key components: the ability to differentiate between one resistor, no resistors, and many resistors using OpenCV, the ability to non-deterministically choose target a location to pick up a resistor and successfully pick up at least one over 50% of the time (either in simulation or reality), and the integration of the two aforementioned algorithms to move a single resistor to a designated location or move several back to the pile where they were extracted depending on how many were detected. For picking up the resistors, a simple permanent magnet will suffice.
+
+As a stretch goal, we hope to implement a primitive machine learning model for the non-deterministic aspect. Specifically, this means using a camera to compile data on the pile of resistors and changing the extraction approach in some way based on previous successes and failures. Notably, doing so may require multiple cameras. This could involve initially implementing a teleop program where we control the arm to extract one resistor while the program stores the arm’s position as training data. In addition to the ML model, we would also like to incorporate an electromagnet instead of a permanent magnet so that the robot arm can drop resistors after picking them up. However, this is a stretch goal because dropping is a more trivial piece of a resistor pick and place algorithm but potentially tedious to implement. 
