@@ -1,0 +1,31 @@
+title: Resistor_Pick_and_Place
+author: By Ansel & Zahra
+# email: your-email@domain.com
+description: > # this means to ignore newlines until "twitter_username:"
+  Pick up a single resistor from a pile using Widowx robotic arm and place it in a designated location.
+# social links
+# twitter_username: jekyllrb
+github_username: anselhc
+# rss: rss
+# dribbble_username: jekyll
+# facebook_username: jekyll
+# flickr_username: jekyll
+# instagram_username: jekyll
+# linkedin_username: jekyll
+# pinterest_username: jekyll
+# youtube_username: jekyll
+# googleplus_username: +jekyll
+
+# Mastodon instances
+# mastodon:
+# - username: jekyll
+#   instance: example.com
+# - username: jekyll2
+#   instance: example.com
+
+
+show_excerpts: false # set to true to show excerpts on the homepage
+
+remote_theme: pages-themes/cayman@v0.2.0
+plugins:
+- jekyll-remote-theme # add this line to the plugins list if you already have one
