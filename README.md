@@ -1,5 +1,5 @@
 # Resister Pick and Place
-
+ 
 Robotics project in progress with a simple goal: To utilize a robotic arm equipped with an electromagnet and a camera to extract a single resistor from a pile of resistors.
 
 ## Milestone I
