@@ -83,30 +83,6 @@ def resistor_metric(img, contour):
         return "0"
     return ">1"
 
-
-if __name__ == "__main__":
-    path = "Media/IMG_1730.JPG"
-    active = True
-    test_image = cv2.imread(path)
-    test_image = test_image[:-500, 300:-200]
-
-    while active:
-        resistors_detected = detect_resistors(test_image)
-        print(resistors_detected)
-        # for i in enumerate(resistor_contour):
-        #     cv2.drawContours(
-        #         test_image,
-        #         resistor_contour,
-        #         i[0],
-        #         (0, 0, 255),
-        #         1,
-        #     )
-        key = cv2.waitKey(20)
-        if key == 27:
-            cv2.destroyAllWindows()
-            active = False
-
-
 def switch_magnet(bit_string, usb_port):
     """
     Turns magnet on for h input or off for l input.
@@ -144,3 +120,36 @@ def switch_magnet(bit_string, usb_port):
     # if ser.isOpen():
     #     ser.close()
     #     print("Serial port closed.")
+
+
+def get_video_frame():
+    cap = cv2.VideoCapture(4)
+    if not cap.isOpened():
+        print("Cannot open camera")
+        exit()
+    ret, frame = cap.read()
+    return frame
+
+if __name__ == "__main__":
+    test_image = get_video_frame()
+    cv2.imshow('Video Frame', test_image)
+    cv2.waitKey(1)
+    #path = "Media/IMG_1730.JPG"
+    active = True
+    test_image = test_image[:-500, 300:-200]
+
+    while active:
+        resistors_detected = detect_resistors(test_image)
+        print(resistors_detected)
+        # for i in enumerate(resistor_contour):
+        #     cv2.drawContours(
+        #         test_image,
+        #         resistor_contour,
+        #         i[0],
+        #         (0, 0, 255),
+        #         1,
+        #     )
+    key = cv2.waitKey(20)
+    if key == 27:
+        cv2.destroyAllWindows()
+        active = False
