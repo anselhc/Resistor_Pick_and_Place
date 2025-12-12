@@ -2,13 +2,16 @@ import numpy as np
 from scipy.stats import truncnorm
 import time
 import argparse
+from resistor_pick_and_place.Resistor_detector import switch_magnet
 from widowx_env_service import WidowXClient, WidowXConfigs, WidowXStatus
 
+magnet_path = b""
 parser = argparse.ArgumentParser(
-description='WidowX robotic arm for 3D imaging with gaussian splatting')
+    description="WidowX robotic arm for 3D imaging with gaussian splatting"
+)
 
-parser.add_argument('--ip', type=str, default='localhost')
-parser.add_argument('--port', type=int, default=5556)
+parser.add_argument("--ip", type=str, default="localhost")
+parser.add_argument("--port", type=int, default=5556)
 
 # parser.add_argument('--repeats', type=int, default=4,
 #                     help='Number of back-and-forth repeats')
@@ -21,10 +24,10 @@ parser.add_argument('--port', type=int, default=5556)
 
 args = parser.parse_args()
 
- # Initialization
+# Initialization
 client = WidowXClient(host=args.ip, port=args.port)
 client.init(WidowXConfigs.DefaultEnvParams, image_size=256)
-print('Waiting 5s to ensure server fully initialized...')
+print("Waiting 5s to ensure server fully initialized...")
 time.sleep(5)
 print("Starting robot.")
 
@@ -43,6 +46,7 @@ while prompt_user != "q":
     x_coord = 0
     while x_lower_bound > x_coord or x_upper_bound < x_coord:
         x_coord = np.random.normal(loc=x_mean, scale=0.05)
+    switch_magnet()
     client.move(np.array([x_coord, 0, 0.1, 0, 1.5, 0]))
     client.move(np.array([x_coord, 0, 0.0175, 0, 1.5, 0]))
     time.sleep(1)
