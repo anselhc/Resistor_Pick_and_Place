@@ -2,10 +2,10 @@ import numpy as np
 from scipy.stats import truncnorm
 import time
 import argparse
-from resistor_pick_and_place.Resistor_detector import switch_magnet
+from Resistor_detector import switch_magnet
 from widowx_env_service import WidowXClient, WidowXConfigs, WidowXStatus
 
-magnet_path = b""
+magnet_path = "/dev/ttyACM0"
 parser = argparse.ArgumentParser(
     description="WidowX robotic arm for 3D imaging with gaussian splatting"
 )
@@ -35,7 +35,7 @@ print("Starting robot.")
 prompt_user = input("Press enter to grip")
 while prompt_user != "":
     time.sleep(1)
-client.move_gripper(0.075)
+client.move_gripper(0.2)
 time.sleep(1)
 
 # Main loop
@@ -46,12 +46,13 @@ while prompt_user != "q":
     x_coord = 0
     while x_lower_bound > x_coord or x_upper_bound < x_coord:
         x_coord = np.random.normal(loc=x_mean, scale=0.05)
-    switch_magnet()
+    switch_magnet(magnet_path, b"h\n")
     client.move(np.array([x_coord, 0, 0.1, 0, 1.5, 0]))
     client.move(np.array([x_coord, 0, 0.0175, 0, 1.5, 0]))
     time.sleep(1)
     client.move(np.array([x_coord, 0, 0.1, 0, 1.5, 0]))
     client.move(np.array([0.15, 0, 0.15, 0, 1.5, 0]))
+    # switch_magnet(magnet_path, b"l\n")
     prompt_user = input("Press enter to pick and enter q to quit")
 # Reset
 client.move_gripper(1)

@@ -1,5 +1,5 @@
 import time
-import serial
+#import serial
 import cv2
 from operator import itemgetter
 
@@ -128,6 +128,8 @@ def get_video_frame():
         print("Cannot open camera")
         exit()
     ret, frame = cap.read()
+    #cv2.namedWindow('Video Frame', cv2.WINDOW_NORMAL)
+    #cv2.imshow('Video Frame', frame)
     return frame
 
 if __name__ == "__main__":
@@ -139,6 +141,7 @@ if __name__ == "__main__":
     test_image = test_image[:-500, 300:-200]
 
     while active:
+        #get_video_frame()
         resistors_detected = detect_resistors(test_image)
         print(resistors_detected)
         # for i in enumerate(resistor_contour):
