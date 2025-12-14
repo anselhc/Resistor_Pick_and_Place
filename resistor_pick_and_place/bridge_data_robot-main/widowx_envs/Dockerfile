@@ -84,7 +84,8 @@ ENV PYTHONPATH="${PYTHONPATH}:/home/${USER_ID}/interbotix_ws/src/widowx_envs"
 ENV ROBONETV2_ARM=wx250s
 ENV DATA=/home/robonet/trainingdata
 ENV EXP=/home/robonet/experiments
-ENV REALSENSE_SERIAL=043322072463
+ENV REALSENSE_SERIAL=1347LZOE57Z8
+# changed above line from default serial number
 
 # build interbox ros packages
 RUN source /opt/ros/noetic/setup.bash \

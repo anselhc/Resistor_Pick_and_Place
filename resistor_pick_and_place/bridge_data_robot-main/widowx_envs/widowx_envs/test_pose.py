@@ -52,7 +52,7 @@ while prompt_user != "q":
     time.sleep(1)
     client.move(np.array([x_coord, 0, 0.1, 0, 1.5, 0]))
     client.move(np.array([0.15, 0, 0.15, 0, 1.5, 0]))
-    # switch_magnet(magnet_path, b"l\n")
+    switch_magnet(magnet_path, b"l\n")
     prompt_user = input("Press enter to pick and enter q to quit")
 # Reset
 client.move_gripper(1)

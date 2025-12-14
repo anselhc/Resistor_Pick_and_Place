@@ -1,5 +1,5 @@
 import time
-#import serial
+import serial
 import cv2
 from operator import itemgetter
 
