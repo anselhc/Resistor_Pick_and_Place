@@ -14,4 +14,4 @@ source ~/myenv/bin/activate
 exec roslaunch widowx_controller widowx_rs.launch \
     ${video_stream_provider_string} camera_connector_chart:=/tmp/camera_connector_chart \
     serial_no_camera1:=${REALSENSE_SERIAL} \
-    python_node:=false realsense:=false # set realsense to false again
+    python_node:=false realsense:=true # set realsense to false again
