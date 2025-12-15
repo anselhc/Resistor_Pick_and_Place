@@ -2,7 +2,7 @@
  
 Robotics project in progress with a simple goal: To utilize a robotic arm equipped with an electromagnet and a camera to extract a single resistor from a pile of resistors.
 
-[![Project specifics](IMG_1755.jpg)] (<a href="project_specifics.md">) 
+[![Project specifics](IMG_1755.jpg)](a href="project_specifics.md")
 
 
 ## Milestone I
