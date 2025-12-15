@@ -2,6 +2,9 @@
  
 Robotics project in progress with a simple goal: To utilize a robotic arm equipped with an electromagnet and a camera to extract a single resistor from a pile of resistors.
 
+[![Project specifics](IMG_1755.jpg)] (<a href="project_specifics.md">) 
+
+
 ## Milestone I
 ###WidowX
 The first milestone of this project consisted of two fundamental goals. First, we wanted to verify the feasibility of connecting to the WidowX robotic arm we have on hand for experimentation purposes as we develop this project. Through collaboration with another project team, we were indeed able to verify that this would be reasonably attainable.
