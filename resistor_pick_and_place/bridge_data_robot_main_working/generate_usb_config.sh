@@ -17,9 +17,6 @@ while IFS= read -r line; do
         yellow=$(echo "$line" | awk -F '(' '{print $2}' | awk -F ')' '{print $1}')
     elif [[ $line == *"Intel(R) RealSense(TM) Depth Ca"* ]]; then
         d435=$(echo "$line" | awk -F 'Ca ' '{print $2}' | awk -F ')' '{print $1}')
-    # Adding my own lines here; delete if doesn't work
-    #elif [[ $line == *"Logitech, Inc. HD Webcam C615"* ]]; then
-    #    d435=$(echo "$line" | awk -F 'Ca ' '{print $2}' | awk -F ')' '{print $1}')
     fi
 done < <(v4l2-ctl --list-devices)
 

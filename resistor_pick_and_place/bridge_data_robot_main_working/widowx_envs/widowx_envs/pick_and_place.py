@@ -75,15 +75,14 @@ def pick_and_place(xy_initial, xy_final, height, clearance_height, client, gripp
         client.step_action(np.array([-0.05, 0, 0.05, 0, 0,0, 0]),blocking=blocking)
         time.sleep(1.5)
         client.move(np.array([x_initial, y_initial, clearance_height+height, 0, 1.5, 0]),blocking=blocking)
-    
-    #### previously goes to above initial position / piece
-    time.sleep(1.5) #### Changes yaw
+        
+    time.sleep(1.5)
     client.move(np.array([x_initial, y_initial, clearance_height+height, 0, 1.5, np.pi / 4]),blocking=blocking) # roll
-    time.sleep(1.5) #### goes down to being around the piece
+    time.sleep(1.5)
     client.move(np.array([x_initial, y_initial, height, 0, 1.5, np.pi / 4]),blocking=blocking)
-    time.sleep(1.5) #### closes gripper
+    time.sleep(1.5)
     client.move_gripper(0.0)
-    time.sleep(1.5) #### raises back up
+    time.sleep(1.5)
     client.move(np.array([x_initial, y_initial, clearance_height+height, 0, 1.5, np.pi / 4]),blocking=blocking)
     time.sleep(1.5)
 

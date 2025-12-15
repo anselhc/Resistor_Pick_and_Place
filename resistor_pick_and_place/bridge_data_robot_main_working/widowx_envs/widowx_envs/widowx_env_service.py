@@ -105,7 +105,7 @@ class WidowXActionServer():
             del self.bridge_env
 
         from widowx_envs.widowx_env import BridgeDataRailRLPrivateWidowX
-        from multicam_server.src.multicam_server.topic_utils import IMTopic
+        from multicam_server.topic_utils import IMTopic
         from tf.transformations import quaternion_from_euler
         from tf.transformations import quaternion_matrix
 

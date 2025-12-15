@@ -555,6 +555,6 @@ class FinetuningBridgeDataWidowX(BridgeDataRailRLPrivateWidowX):
 if __name__ == '__main__':
     env = StateReachingWidowX()
     env.move_to_neutral()
-    for i in range(1):
+    for i in range(5):
         env.reset()
         env.step(np.zeros(env.action_space.shape))

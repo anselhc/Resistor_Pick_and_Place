@@ -1,8 +1,9 @@
 import cv2
 
 cap = cv2.VideoCapture(4)
+
 if not cap.isOpened():
-    print('cannot open camera')
+    print("Cannot open camera")
     exit()
 while True:
     ret, frame = cap.read()
