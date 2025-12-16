@@ -33,7 +33,7 @@ def detect_resistors(img):
     img_width = len(img[0])
     img_center = (img_length // 2, img_width // 2)
 
-    cropped_radius = 200
+    cropped_radius = 65
     img = img[
         img_center[0] - cropped_radius : img_center[0] + cropped_radius,
         img_center[1] - cropped_radius : img_center[1] + cropped_radius,
@@ -49,20 +49,24 @@ def detect_resistors(img):
     binary_image = cv2.inRange(img, (rl, gl, bl), (rh, gh, bh))
 
     # Uncomment to display binary image
-    cv2.namedWindow("Binary image", cv2.WINDOW_NORMAL)
-    cv2.imshow("Binary image", binary_image)
-    cv2.namedWindow("Original image", cv2.WINDOW_NORMAL)
-    cv2.imshow("Original image", img)
+    # cv2.namedWindow("Binary image", cv2.WINDOW_NORMAL)
+    # cv2.imshow("Binary image", binary_image)
+    # cv2.imshow("Original image", img)
+    # cv2.waitKey(0)
 
     # Generate contours
     resistor_contour = create_binary_contours(binary_image)
+    try:
+        resistor_contour = resistor_contour[0]
+    except IndexError:
+        resistor_contour = 0
     # Filter contours by area
     # resistor_contour = []
     # for i in contours:
     #     # if 15000 > i[0] > 300:
     #     resistor_contour.append(i[1])
     # print(resistor_contour[0])
-    return resistor_metric(img, resistor_contour[0])
+    return resistor_metric(img, resistor_contour)
 
 
 def resistor_metric(img, contour):
@@ -70,18 +74,20 @@ def resistor_metric(img, contour):
     Given a cropped image and contour within that image,
     return how many resistors are present
     """
-    single_resistor = (0.09, 0.15)
-    no_resistor = 0.005
-    # Get number of pixels in image
-    total_pixels = len(img) * len(img[0])
-    resistor_pixels = contour[0]
-    print(resistor_pixels)
-    print(total_pixels)
-    if single_resistor[0] < resistor_pixels / total_pixels < single_resistor[1]:
-        return "1"
-    elif resistor_pixels / total_pixels < no_resistor:
-        return "0"
-    return ">1"
+    if type(contour) is not int: 
+        single_resistor = (0.05, 0.005)
+        no_resistor = 0.005
+        # Get number of pixels in image
+        total_pixels = len(img) * len(img[0])
+        resistor_pixels = contour[0]
+        print(resistor_pixels)
+        print(total_pixels)
+        if single_resistor[0] > resistor_pixels / total_pixels > single_resistor[1]:
+            return "1"
+        elif resistor_pixels / total_pixels < no_resistor:
+            return "0"
+        return ">1"
+    return '0'
 
 def switch_magnet(bit_string, usb_port):
     """
@@ -128,31 +134,34 @@ def get_video_frame():
         print("Cannot open camera")
         exit()
     ret, frame = cap.read()
-    #cv2.namedWindow('Video Frame', cv2.WINDOW_NORMAL)
-    #cv2.imshow('Video Frame', frame)
+    cv2.imshow('Video Frame', frame)
     return frame
 
-if __name__ == "__main__":
-    test_image = get_video_frame()
-    cv2.imshow('Video Frame', test_image)
-    cv2.waitKey(1)
-    #path = "Media/IMG_1730.JPG"
-    active = True
-    test_image = test_image[:-500, 300:-200]
-
-    while active:
-        #get_video_frame()
-        resistors_detected = detect_resistors(test_image)
-        print(resistors_detected)
-        # for i in enumerate(resistor_contour):
-        #     cv2.drawContours(
-        #         test_image,
-        #         resistor_contour,
-        #         i[0],
-        #         (0, 0, 255),
-        #         1,
-        #     )
-    key = cv2.waitKey(20)
-    if key == 27:
-        cv2.destroyAllWindows()
-        active = False
+magnet_path = "/dev/ttyACM0"
+switch_magnet(magnet_path, b"l\n")
+# if __name__ == "__main__":
+# test_image = get_video_frame()
+# cv2.imshow('Video Frame', test_image)
+# cv2.waitKey(1)
+# cv2.namedWindow('Video Frame', cv2.WINDOW_NORMAL)
+# cv2.namedWindow("Original image", cv2.WINDOW_NORMAL)
+# get_video_frame()
+# active = True
+# while active:
+#     image = get_video_frame()
+#     resistors_detected = detect_resistors(image)
+    # cv2.namedWindow("Original image", cv2.WINDOW_NORMAL)
+    # cv2.imshow("Original image", img)
+    # print(resistors_detected)
+    # for i in enumerate(resistor_contour):
+    #     cv2.drawContours(
+    #         test_image,
+    #         resistor_contour,
+    #         i[0],
+    #         (0, 0, 255),
+    #         1,
+    #     )
+# key = cv2.waitKey(20)
+# if key == 27:
+#     cv2.destroyAllWindows()
+#     active = False
