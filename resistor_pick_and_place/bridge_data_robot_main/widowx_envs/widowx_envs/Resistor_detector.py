@@ -5,7 +5,16 @@ from operator import itemgetter
 
 
 def create_binary_contours(binary_image, invert=False):
-    """Creates contours for binary images"""
+    """
+    Creates contours for binary images
+    
+    Args: 
+        binary_image: a binary image
+        invert: a boolean representing whether image colors are inverted
+
+    Returns:
+        countours: a list of contours
+    """
     if invert:
         binary_image = cv2.bitwise_not(binary_image)
 
@@ -27,6 +36,9 @@ def detect_resistors(img):
     there are no resistors,
     there is one resistor,
     and there are many resistors.
+
+    Args:
+        img: an image to process
     """
     # Define image dimensions
     img_length = len(img)
@@ -73,6 +85,15 @@ def resistor_metric(img, contour):
     """
     Given a cropped image and contour within that image,
     return how many resistors are present
+
+    Args:
+        img: a cropped image
+        contour: an image contour
+
+    Returns:
+        "1" when one resistor is detected
+        "0" when no resistors are detected
+        ">1" when more than one resistor is detected
     """
     if type(contour) is not int: 
         single_resistor = (0.05, 0.005)
@@ -129,6 +150,12 @@ def switch_magnet(bit_string, usb_port):
 
 
 def get_video_frame():
+    """
+    From the camera feed, extracts a single frame and displays
+
+    Returns:
+        frame: a still image from the video camera
+    """
     cap = cv2.VideoCapture(4)
     if not cap.isOpened():
         print("Cannot open camera")
@@ -136,32 +163,3 @@ def get_video_frame():
     ret, frame = cap.read()
     cv2.imshow('Video Frame', frame)
     return frame
-
-magnet_path = "/dev/ttyACM0"
-switch_magnet(magnet_path, b"l\n")
-# if __name__ == "__main__":
-# test_image = get_video_frame()
-# cv2.imshow('Video Frame', test_image)
-# cv2.waitKey(1)
-# cv2.namedWindow('Video Frame', cv2.WINDOW_NORMAL)
-# cv2.namedWindow("Original image", cv2.WINDOW_NORMAL)
-# get_video_frame()
-# active = True
-# while active:
-#     image = get_video_frame()
-#     resistors_detected = detect_resistors(image)
-    # cv2.namedWindow("Original image", cv2.WINDOW_NORMAL)
-    # cv2.imshow("Original image", img)
-    # print(resistors_detected)
-    # for i in enumerate(resistor_contour):
-    #     cv2.drawContours(
-    #         test_image,
-    #         resistor_contour,
-    #         i[0],
-    #         (0, 0, 255),
-    #         1,
-    #     )
-# key = cv2.waitKey(20)
-# if key == 27:
-#     cv2.destroyAllWindows()
-#     active = False
