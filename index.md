@@ -5,11 +5,11 @@
 Welcome! This project is a simple proof of concept of a robust robotic resistor sorting system. It utilizes the WidowX robotic arm, an 1080p Logitech webcam, and a programmable electromagnet to implement a resistor pick and place program. The program works through trial and error. The arm attempts to extract a resistor with the electromagnet, checks whether it succeeded by holding it in front of the camera, and then either tries again or returns to a home position and drops the resistor.
 </div>
 
-<a href=collaborators.md>
+<a href=project_details.md>
   <img src="architecture_button.jpg" alt="Project specifics" style="Float: left; margin-right: 55px; width: 45%; height: 58%; object-fit: cover;">
 </a>
 
-<a href=project_details.md>
+<a href=collaborators.md>
   <img src="contributors_button.jpg" alt="Contributors" style="Float: left; width: 45%; height: 58%; object-fit: cover;">
 </a>
   
