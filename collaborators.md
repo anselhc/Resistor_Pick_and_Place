@@ -25,6 +25,6 @@
   <!-- Right Column: Text -->
   <div>
     <p>Zahra Lari</p>
-    <p>Second year mechanical engineering major at Olin College of Engineering.</p>
+    <p>Zahra is a Mechanical Engineering major at Olin College of Engineering.</p>
   </div>
 </div>
