@@ -5,12 +5,12 @@ Welcome! This project is a simple proof of concept of a robust robotic resistor 
 </div>
 
 <div style="width: 100%;">
-   <div style="Float:left; width: 80%; object-fit: cover;">
+   <div style="Float:left; width: 45%; object-fit: cover;">
       <a href="project_details.html">
         <img src="architecture_button.jpg" alt="Project specifics">
       </a>
    </div>
-   <div style="Float:right; width: 80%; object-fit: cover;">
+   <div style="Float:right; width: 45%; object-fit: cover;">
       <a href="collaborators.html">
         <img src="contributors_button.jpg" alt="Contributors">
       </a>
